@@ -1,5 +1,4 @@
-import React from 'react';
-import clsx from 'clsx';
+import React, { useState, useContext } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -8,18 +7,14 @@ import styles from './styles';
 
 import TopBar from "./TopBar";
 import SideDrawer from "./SideDrawer";
-import Editor from '../editor';
+import Editor from '../Editor';
 
-const MyDrawer = ({ notes, classes, selectedNoteIndex }) => {
+const MyDrawer = ({ classes }) => {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
-    function handleDrawerOpen() {
-        setOpen(true);
-    }
-
-    function handleDrawerClose() {
-        setOpen(false);
+    function handleDrawerToggle() {
+        setMobileOpen(!mobileOpen);
     }
 
     return (
@@ -28,25 +23,18 @@ const MyDrawer = ({ notes, classes, selectedNoteIndex }) => {
             
             <TopBar
                 classes = { classes }
-                handleDrawerOpen = { handleDrawerOpen }
-                open = { open }
+                handleDrawerToggle = { handleDrawerToggle }
             />
 
             <SideDrawer 
                 classes = { classes } 
-                open = { open }
-                handleDrawerClose = { handleDrawerClose }
+                mobileOpen = { mobileOpen }
+                handleDrawerToggle = { handleDrawerToggle }
                 theme = { theme }
-                selectedNoteIndex = { selectedNoteIndex }
-				notes = { notes } 
             />
 
-            <main
-                className={clsx(classes.content, {
-                [classes.contentShift]: open,
-                })}
-            >
-                <div className={classes.drawerHeader} />
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
                 <Editor />
             </main>
         </div>

@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button";
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Hidden from '@material-ui/core/Hidden';
+import TextField from '@material-ui/core/TextField';
+
+import { NoteContext } from "../contexts/NoteContext";
 
 import SideDrawerItem from "./SideDrawerItem";
 
 export default function SideDrawer(props) {
-    const { classes, open, handleDrawerClose, theme, notes, selectedNoteIndex } = props;
+    const { classes, mobileOpen, handleDrawerToggle, theme, container  } = props;
     const [addingNote, setAddingNote] = useState(false);
     const [title, setTitle] = useState(null);
+    const [notes, setNotes] = useState([]);
+
+    const { getNotes, selectedNoteIndex } = useContext(NoteContext);
+
+    useEffect(() => {
+        getNotes().then(res => setNotes(res));
+    }, [])
 
     const newNoteBtnClick = () => {
         setAddingNote(!addingNote);
@@ -33,39 +39,33 @@ export default function SideDrawer(props) {
         console.log("DELETE NOTE");
     }
 
-    return (
-        <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor="left"
-            open={open}
-            classes={{
-            paper: classes.drawerPaper,
-            }}
-        >
-            <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-            </div>
+    const drawer = (
+        <div>
+            <div className={classes.toolbar} />
             <Divider />
             <Button
                 onClick = { newNoteBtnClick }
-                className = { classes.newNoteBtn }
+                variant="contained" 
+                color="primary" 
+                className={classes.button}
             >
             { addingNote ? "Cancel" : "New Note" }
             </Button>
             {
                 addingNote ? (
                     <div>
-                        <input 
-                            type="text" 
-                            className = { classes.newNoteInput }
-                            placeholder = "Enter note title"
+                        <TextField
+                            className={classes.textField}
+                            type="text"
+                            margin="normal"
+                            variant="outlined"
+                            label = "Note title"
                             onKeyUp = { (e) => setTitle(e.target.value) }
-                            />
+                        />
                         <Button
-                            className = { classes.newNoteSubmitBtn }
+                            variant="contained" 
+                            color="primary" 
+                            className={classes.button}
                             onClick = { newNote }
                         >
                             Create Note
@@ -90,6 +90,39 @@ export default function SideDrawer(props) {
                 ))
             }
             </List>
-        </Drawer>
+        </div>
+    );
+
+    return (
+        <nav className={classes.drawer} aria-label="mailbox folders">
+            <Hidden smUp implementation="css">
+                <Drawer
+                    container={container}
+                    variant="temporary"
+                    anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                    open={mobileOpen}
+                    onClose={handleDrawerToggle}
+                    classes={{
+                    paper: classes.drawerPaper,
+                    }}
+                    ModalProps={{
+                    keepMounted: true,
+                    }}
+                >
+                    {drawer}
+                </Drawer>
+            </Hidden>
+            <Hidden xsDown implementation="css">
+                <Drawer
+                    classes={{
+                    paper: classes.drawerPaper,
+                    }}
+                    variant="permanent"
+                    open
+                >
+                    {drawer}
+                </Drawer>
+            </Hidden>
+      </nav>
     )
 }

@@ -4,66 +4,31 @@ const styles = theme => ({
 	root: {
 		display: 'flex',
 	},
-	appBar: {
-		transition: theme.transitions.create(['margin', 'width'], {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-		}),
+	drawer: {
+		[theme.breakpoints.up('sm')]: {
+			width: drawerWidth,
+			flexShrink: 0,
+		},
 	},
-	appBarShift: {
-		width: `calc(100% - ${drawerWidth}px)`,
+	appBar: {
 		marginLeft: drawerWidth,
-		transition: theme.transitions.create(['margin', 'width'], {
-		easing: theme.transitions.easing.easeOut,
-		duration: theme.transitions.duration.enteringScreen,
-		}),
+		[theme.breakpoints.up('sm')]: {
+			width: `calc(100% - ${drawerWidth}px)`,
+		},
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
+		[theme.breakpoints.up('sm')]: {
+			display: 'none',
+		},
 	},
-	hide: {
-		display: 'none',
-	},
-	drawer: {
-		width: drawerWidth,
-		flexShrink: 0,
-	},
+	toolbar: theme.mixins.toolbar,
 	drawerPaper: {
 		width: drawerWidth,
-	},
-	drawerHeader: {
-		display: 'flex',
-		alignItems: 'center',
-		padding: '0 8px',
-		...theme.mixins.toolbar,
-		justifyContent: 'flex-end',
 	},
 	content: {
 		flexGrow: 1,
 		padding: theme.spacing(3),
-		transition: theme.transitions.create('margin', {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-		}),
-		marginLeft: -drawerWidth,
-	},
-	contentShift: {
-		transition: theme.transitions.create('margin', {
-		easing: theme.transitions.easing.easeOut,
-		duration: theme.transitions.duration.enteringScreen,
-		}),
-		marginLeft: 0,
-	},
-	newNoteBtn: {
-		width: '100%',
-		height: '35px',
-		borderBottom: '1px solid black',
-		borderRadius: '0px',
-		backgroundColor: '#29487d',
-		color: 'white',
-		'&:hover': {
-		backgroundColor: '#88a2ce'
-		}
 	},
 	newNoteInput: {
 		width: '100%',
@@ -76,11 +41,8 @@ const styles = theme => ({
 		outline: '2px solid rgba(81, 203, 238, 1)'
 		}
 	},
-	newNoteSubmitBtn: {
-		width: '100%',
-		backgroundColor: '#28787c',
-		borderRadius: '0px',
-		color: 'white'
+	button: {
+		width: "100%"
 	},
 	listItem: {
 		cursor: 'pointer'
@@ -88,6 +50,10 @@ const styles = theme => ({
 	textSection: {
 		maxWidth: '85%'
 	},  
+	textField: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+	},
 	deleteIcon: {
 		position: 'absolute',
 		right: '5px',
