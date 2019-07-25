@@ -4,8 +4,6 @@ import NoteContextProvider from "../contexts/NoteContext";
 
 import firebase from "firebase";
 
-import Editor from "../editor";
-import Sidebar from "../sidebar";
 import MyDrawer from '../MyDrawer';
 
 export default function NoteMe() {
@@ -26,15 +24,12 @@ export default function NoteMe() {
 	}, []);
 
 	return (
-		<div className="app-container">
+		<div className = "app-container">
 			<NoteContextProvider>
-				<Sidebar
-					selectedNoteIndex = { selectedNoteIndex }
-					notes = { notes }
-				/>
 				<MyDrawer
 					selectedNoteIndex = { selectedNoteIndex }
 					notes = { notes } 
+					bounds={'.app-container'}
 				/>
 			</NoteContextProvider>
 		</div>
