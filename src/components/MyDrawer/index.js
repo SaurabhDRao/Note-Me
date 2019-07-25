@@ -10,8 +10,7 @@ import styles from './styles';
 import TopBar from "./TopBar";
 import SideDrawer from "./SideDrawer";
 
-const MyDrawer = (props) => {
-    const { classes } = props;
+const MyDrawer = ({ notes, classes, selectedNoteIndex }) => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
 
@@ -37,7 +36,9 @@ const MyDrawer = (props) => {
                 classes = { classes } 
                 open = { open }
                 handleDrawerClose = { handleDrawerClose }
-                theme = { theme } 
+                theme = { theme }
+                selectedNoteIndex = { selectedNoteIndex }
+				notes = { notes } 
             />
 
             <main

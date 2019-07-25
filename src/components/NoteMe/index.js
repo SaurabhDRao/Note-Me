@@ -32,7 +32,10 @@ export default function NoteMe() {
 					selectedNoteIndex = { selectedNoteIndex }
 					notes = { notes }
 				/>
-				<MyDrawer />
+				<MyDrawer
+					selectedNoteIndex = { selectedNoteIndex }
+					notes = { notes } 
+				/>
 			</NoteContextProvider>
 		</div>
 	);
