@@ -6,6 +6,7 @@ import firebase from "firebase";
 
 import Editor from "../editor";
 import Sidebar from "../sidebar";
+import MyDrawer from '../MyDrawer';
 
 export default function NoteMe() {
 	const [selectedNoteIndex, setSelectedNoteIndex] = useState(null);
@@ -28,10 +29,10 @@ export default function NoteMe() {
 		<div className="app-container">
 			<NoteContextProvider>
 				<Sidebar
-				selectedNoteIndex = { selectedNoteIndex }
-				notes = { notes }
-			/>
-				<Editor />
+					selectedNoteIndex = { selectedNoteIndex }
+					notes = { notes }
+				/>
+				<MyDrawer />
 			</NoteContextProvider>
 		</div>
 	);
