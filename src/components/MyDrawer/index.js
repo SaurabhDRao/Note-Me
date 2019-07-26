@@ -9,7 +9,7 @@ import TopBar from "./TopBar";
 import SideDrawer from "./SideDrawer";
 import Editor from '../Editor';
 
-const MyDrawer = ({ classes }) => {
+const MyDrawer = ({ classes, history }) => {
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -31,6 +31,7 @@ const MyDrawer = ({ classes }) => {
                 mobileOpen = { mobileOpen }
                 handleDrawerToggle = { handleDrawerToggle }
                 theme = { theme }
+                history = { history }
             />
 
             <main className={classes.content}>

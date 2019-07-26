@@ -7,6 +7,7 @@ import Hidden from '@material-ui/core/Hidden';
 import TextField from '@material-ui/core/TextField';
 
 import { NoteContext } from "../contexts/NoteContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 import SideDrawerItem from "./SideDrawerItem";
 
@@ -17,6 +18,7 @@ export default function SideDrawer(props) {
     const [notes, setNotes] = useState([]);
 
     const { getNotes, selectedNoteIndex } = useContext(NoteContext);
+    const { signOut } = useContext(AuthContext);
 
     useEffect(() => {
         getNotes().then(res => setNotes(res));
@@ -39,9 +41,22 @@ export default function SideDrawer(props) {
         console.log("DELETE NOTE");
     }
 
+    const signOutUser = () => {
+        signOut().then(res => props.history.push("/"));
+    }
+
     const drawer = (
         <div>
-            <div className={classes.toolbar} />
+            <div className={classes.toolbar}>
+                <Button
+                    onClick = { signOutUser }
+                    variant="contained" 
+                    color="secondary" 
+                    className={classes.button}
+                >
+                    Sign out
+                </Button>
+            </div>
             <Divider />
             <Button
                 onClick = { newNoteBtnClick }
