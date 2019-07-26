@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
+import LandingRoute from "../LandingRoute";
+
 import NoteContextProvider from "../contexts/NoteContext";
 
 import MyDrawer from '../MyDrawer';
@@ -12,7 +15,7 @@ export default function NoteMe({ authenticated }) {
 		<div className = "app-container">
 			<NoteContextProvider>
 				<Router>
-					<Route exact path="/" component = { Landing } />
+					<LandingRoute authenticated = { authenticated } exact path="/" component = { Landing } />
 					<PrivateRoute authenticated = { authenticated } exact path="/noteme" component = { MyDrawer } />
 				</Router>
 				{/* <MyDrawer

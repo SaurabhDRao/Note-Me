@@ -82,7 +82,7 @@ const Register = ({ classes, setShowLogin, history }) => {
                 Register
             </Button>
             <Divider />
-            <div>
+            <div style = {{ textAlign: "right" }}>
                 <Button 
                     style = {{ marginTop: "10px" }} 
                     color="secondary" 

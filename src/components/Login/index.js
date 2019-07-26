@@ -63,7 +63,7 @@ const Login = ({ classes, setShowLogin, history }) => {
                 Login
             </Button>
             <Divider />
-            <div>
+            <div style = {{ textAlign: "right" }}>
                 <Button 
                     style = {{ marginTop: "10px" }} 
                     color="secondary" 

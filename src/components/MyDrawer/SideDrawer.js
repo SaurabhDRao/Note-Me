@@ -18,10 +18,11 @@ export default function SideDrawer(props) {
     const [notes, setNotes] = useState([]);
 
     const { getNotes, selectedNoteIndex } = useContext(NoteContext);
-    const { signOut } = useContext(AuthContext);
+    const { signOut, userEmail } = useContext(AuthContext);
 
     useEffect(() => {
         getNotes().then(res => setNotes(res));
+        console.log(userEmail);
     }, [])
 
     const newNoteBtnClick = () => {

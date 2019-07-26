@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import "./App.css";
 import firebase from "firebase";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import NoteMe from "./components/NoteMe";
-import AuthContextProvider from "./components/contexts/AuthContext";
+import { AuthContext } from "./components/contexts/AuthContext";
 
 function App() {
-	const [authenticated, setAuthenticated] = useState(false); 
+	const [authenticated, setAuthenticated] = useState(false);
+	const [loading, setLoading] = useState(true);
+
+	const { setUserEmail } = useContext(AuthContext);
 
 	useEffect(() => {
         firebase.auth().onAuthStateChanged((authenticated) => {
-            authenticated
-                ? setAuthenticated(true)
-                : setAuthenticated(false);
+            if(authenticated) {
+				setAuthenticated(true);
+				setUserEmail(firebase.auth().currentUser.email);
+			} else {
+				setAuthenticated(false);
+			}
+			setLoading(false);
 		});
     }, [])
 
-	return (
-		<AuthContextProvider>
-			<NoteMe authenticated = { authenticated } />
-		</AuthContextProvider>
-	);
+	return loading ? <LinearProgress /> : (<NoteMe authenticated = { authenticated } />);
 }
 
 export default App;
