@@ -61,7 +61,10 @@ const styles = theme => ({
 		'&:hover': {
 		color: 'red'
 		}
-	}
+	},
+    margin: {
+        margin: theme.spacing(1),
+    }
 });
 
 export default styles;

@@ -20,10 +20,14 @@ html, body {
 	width: 100%;
 	float: left;
 }
+.ql-toolbar {
+	background: #eee;
+}
 .ql-container {
 	box-sizing: border-box;
 	height: calc(100% - 42px);
 	overflow-y: scroll;
+	background: #fff;
 }
 .ql-editor {
 	cursor: text;

@@ -5,6 +5,10 @@ import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button";
 import Hidden from '@material-ui/core/Hidden';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import Snackbar from '@material-ui/core/Snackbar';
+import MySnackbarContentWrapper from "../MySnackBarContentWrapper";
 
 import { NoteContext } from "../contexts/NoteContext";
 import { AuthContext } from "../contexts/AuthContext";
@@ -15,13 +19,28 @@ export default function SideDrawer(props) {
     const { classes, mobileOpen, handleDrawerToggle, theme, container  } = props;
     const [addingNote, setAddingNote] = useState(false);
     const [title, setTitle] = useState(null);
-    const [notes, setNotes] = useState([]);
+    const [snackbarContent, setSnackbarContent] = useState("");
+    const [open, setOpen] = useState(false);
 
-    const { getNotes, selectedNoteIndex } = useContext(NoteContext);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
+
+    const { 
+        notes, 
+        selectedNoteIndex, 
+        addNewNote, 
+        removeNote, 
+        selectNote,
+        setSelectedNote,
+        setSelectedNoteIndex 
+    } = useContext(NoteContext);
     const { signOut, userEmail } = useContext(AuthContext);
 
     useEffect(() => {
-        getNotes().then(res => setNotes(res));
         console.log(userEmail);
     }, [])
 
@@ -32,14 +51,27 @@ export default function SideDrawer(props) {
 
     const newNote = () => {
         console.log(title);
+        addNewNote(title);
+        setTitle(null);
+        setAddingNote(false);
     }
 
-    const selectNote = () => {
-        console.log("SELECT NOTE");
+    const _selectNote = (n, i) => {
+        console.log("SELECT");
+        selectNote(n, i);
     }
 
-    const deleteNote = () => {
-        console.log("DELETE NOTE");
+    const deleteNote = (note) => {
+        const noteIndex = notes.indexOf(note);
+        if((selectedNoteIndex === noteIndex) || (notes.length <= 1)) {
+            setSelectedNoteIndex(null);
+            setSelectedNote(null);
+        } else if (notes.length > 1) {
+            _selectNote(notes[selectedNoteIndex - 1], selectedNoteIndex - 1) 
+        }
+        removeNote(note.id)
+            .then(res => { setSnackbarContent(res); setOpen(true); })
+            .catch(err => { setSnackbarContent(err.message); setOpen(true); });
     }
 
     const signOutUser = () => {
@@ -48,15 +80,11 @@ export default function SideDrawer(props) {
 
     const drawer = (
         <div>
-            <div className={classes.toolbar}>
-                <Button
-                    onClick = { signOutUser }
-                    variant="contained" 
-                    color="secondary" 
-                    className={classes.button}
-                >
-                    Sign out
-                </Button>
+            <div className={classes.toolbar} style = {{ textAlign: "right" }}>
+                { userEmail }
+                <IconButton key="sign-out" aria-label="sign-out" onClick = { signOutUser } >
+                    <ExitToApp style = {{ color: "red" }} />
+                </IconButton>
             </div>
             <Divider />
             <Button
@@ -97,7 +125,7 @@ export default function SideDrawer(props) {
                             note = { note }
                             index = { index }
                             selectedNoteIndex = { selectedNoteIndex }
-                            selectNote = { selectNote }
+                            _selectNote = { _selectNote }
                             deleteNote = { deleteNote }
                             classes = { classes }
                         />
@@ -139,6 +167,23 @@ export default function SideDrawer(props) {
                     {drawer}
                 </Drawer>
             </Hidden>
+            <Snackbar
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+                }}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <MySnackbarContentWrapper
+                    onClose={handleClose}
+                    classes = { classes }
+                    variant="error"
+                    className={classes.margin}
+                    message = { snackbarContent }
+                />
+            </Snackbar>
       </nav>
     )
 }

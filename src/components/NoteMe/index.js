@@ -18,9 +18,6 @@ export default function NoteMe({ authenticated }) {
 					<LandingRoute authenticated = { authenticated } exact path="/" component = { Landing } />
 					<PrivateRoute authenticated = { authenticated } exact path="/noteme" component = { MyDrawer } />
 				</Router>
-				{/* <MyDrawer
-					bounds={'.app-container'}
-				/> */}
 			</NoteContextProvider>
 		</div>
 	);
