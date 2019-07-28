@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { Divider, Grid } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MySnackbarContentWrapper from "../MySnackBarContentWrapper";
 import { AuthContext } from "../contexts/AuthContext";

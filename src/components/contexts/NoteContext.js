@@ -13,6 +13,7 @@ export default function NoteContextProvider(props) {
     const { userEmail } = useContext(AuthContext);
 
     useEffect(() => {
+        console.log(userEmail);
         firebase.firestore().collection("notes").where("email", "==", userEmail).onSnapshot(serverUpdate => {
 			const _notes = serverUpdate.docs.map(_doc => {
 				const data = _doc.data();

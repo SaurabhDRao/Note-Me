@@ -43,7 +43,7 @@ const MyDrawer = ({ classes, history }) => {
                 <div className={classes.toolbar} />
                 {
                     selectedNote ? <Editor /> : (
-                        <Typography style = {{ textAlign: "center", marginTop: "40%", color: "#aaa" }} variant="h5" gutterBottom>
+                        <Typography style = {{ textAlign: "center", marginTop: "20%", color: "#aaa" }} variant="h5" gutterBottom>
                             Open a note or create one
                         </Typography>
                     )

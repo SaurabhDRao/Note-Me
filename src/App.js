@@ -24,7 +24,7 @@ function App() {
 		});
     }, [])
 
-	return loading ? <LinearProgress /> : (<NoteMe authenticated = { authenticated } />);
+	return loading ? <LinearProgress /> : <NoteMe authenticated = { authenticated } />
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -40,10 +40,6 @@ export default function SideDrawer(props) {
     } = useContext(NoteContext);
     const { signOut, userEmail } = useContext(AuthContext);
 
-    useEffect(() => {
-        console.log(userEmail);
-    }, [])
-
     const newNoteBtnClick = () => {
         setAddingNote(!addingNote);
         setTitle(null);
@@ -75,6 +71,8 @@ export default function SideDrawer(props) {
     }
 
     const signOutUser = () => {
+        setSelectedNote(null);
+        setSelectedNoteIndex(null);
         signOut().then(res => props.history.push("/"));
     }
 
